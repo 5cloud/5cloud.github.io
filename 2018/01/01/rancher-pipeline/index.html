@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/hexo-theme-huxblog/img/favicon.ico">
+
+    <title>
+        
+          为您奉上Rancher Pipeline第一时间的尝鲜体验！ - Andrew Long - 5cloud.github.io|龙淼的博客|基础架构|云计算|容器|Cloud Native|DevOps
+        
+    </title>
+
+    <link rel="canonical" href="http://kaijun.rocks/hexo-theme-huxblog/hexo-theme-huxblog/2018/01/01/rancher-pipeline/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/hexo-theme-huxblog/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/hexo-theme-huxblog/css/hux-blog.min.css">
+
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/hexo-theme-huxblog/css/highlight.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/hexo-theme-huxblog/">Andrew`s Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/hexo-theme-huxblog/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/hexo-theme-huxblog/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/hexo-theme-huxblog/archives/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/hexo-theme-huxblog/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    
+<!-- Image to hack wechat -->
+<!-- <img src="http://kaijun.rocks/hexo-theme-huxblog/hexo-theme-huxblog/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}" width="0" height="0"> -->
+
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        background-image: url('tag-bg.png')
+    }
+</style>
+<header class="intro-header" >
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                          <a class="tag" href="/hexo-theme-huxblog/tags/#Rancher" title="Rancher">Rancher</a>
+                        
+                          <a class="tag" href="/hexo-theme-huxblog/tags/#容器" title="容器">容器</a>
+                        
+                          <a class="tag" href="/hexo-theme-huxblog/tags/#Pipeline" title="Pipeline">Pipeline</a>
+                        
+                          <a class="tag" href="/hexo-theme-huxblog/tags/#CICD" title="CICD">CICD</a>
+                        
+                          <a class="tag" href="/hexo-theme-huxblog/tags/#DevOps" title="DevOps">DevOps</a>
+                        
+                    </div>
+                    <h1>为您奉上Rancher Pipeline第一时间的尝鲜体验！</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        Posted by Andrew Long/龙淼 on
+                        2018-01-01
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <blockquote>
+<p><strong>前言：</strong><br>时至今日，相信大家对于来自硅谷的Rancher Labs已经不那么陌生了。我没有记错的话，Rancher应该是2015年下半年早些的时候进入中国容器技术爱好者的视野（那时国内就压根还没有“容器用户”）。Rancher主打的“开箱即用”风格的容器云产品，可快速构建和简易管理容器化的基础架构，进而提供CaaS的能力（Container as a Service）。在那个国内容器还是蛮荒的年代，Rancher的产品是足够闪耀的，所以圈粉无数。随后的几年，容器领域正可谓风云变化、大浪淘沙，容器编排领域之争现也已尘埃落定。凭借在诞生基因、开放性、可扩展性、可靠性等方面的均衡表现，Kubernetes成为最后的赢家，实属当之无愧。但笔者认为，Rancher在容器领域的技术贡献、容器在中国的推广和普及，发挥了相当积极的作用。</p>
+</blockquote>
+<p>当今企业“数字化转型”是一个极其热门的话题，在以快为先的时代，产品可快速迭代的重要性不言而喻。<strong>CI/CD（持续集成与持续交付）敏捷、稳定、可靠的特性，越来越被企业所青睐与需要。然而真正实现CI／CD却并非易事，真pipeline搭建工作复杂，平滑升级难以保障，服务宕机难以避免等。来自硅谷的企业级容器管理平台提供商Rancher Labs，近日正式发布开源的、可与Rancher企业级容器管理平台集成的Rancher Pipeline</strong>。Rancher Pipeline会秉承Rancher一如既往的风格，给我们带来极简、易用的操作体验吗？功能方面是否全面？与传统的gitlab、jenkins可构建的pipeline又有何种不同？本文接下来的内容，就向大家奉上Rancher Pipeline第一时间的尝鲜体验！</p>
+<p><img src="https://5cloud.github.io/img/20171230/pipeline.jpg" alt="catalog2.0"> </p>
+<p>Rancher官网：<a href="https://rancher.com" target="_blank" rel="noopener">https://rancher.com</a><br>Rancher Pipeline项目地址:<a href="https://github.com/rancher/pipeline" target="_blank" rel="noopener">https://github.com/rancher/pipeline</a><br>Examples of Rancher Pipeline:<a href="https://github.com/biblesyme/pipeline-example" target="_blank" rel="noopener">https://github.com/biblesyme/pipeline-example</a> （本文使用的Demo）<br>Rancher Pipeline Reference Guide：<a href="https://github.com/rancher/pipeline/blob/master/docs/README.md" target="_blank" rel="noopener">https://github.com/rancher/pipeline/blob/master/docs/README.md</a></p>
+<hr>
+<blockquote>
+<p>Rancher Pipeline是由Rancher的应用商店(Catalog，community-catalog)服务提供，可非常简易、快速地在您的Rancher集群环境当中完成Rancher Pipeline的初始化安装；<img src="https://5cloud.github.io/img/20171230/catalog2.0-1.jpg" alt="catalog2.0"><br>Rancher Pipeline目前只能在<strong>Rancher 1.6</strong>版本可用，Rancher 2.0暂时还不支持。因为Rancher 2.0产品编排框架全面拥抱Kubernetes，已经抛弃了此前的自有编排框架Cattle，在应用商店（Catalog）这个服务层面会对应不同的技术实现以及开发工作量。熟悉Rancher老版本（即1.6之前）的玩家都知道，其应用商店上架主要是编写两个编排文件，docker-compose.yml和rancher-compose.yml。那么Rancher 2.0，应用包管理已经交由了现在Kubernetes生态当中流行的技术实现–<a href="https://helm.sh/" target="_blank" rel="noopener">HELM</a>（源于容器创业公司Deis，该公司于2017年上半年被微软收购），所以也理所当然就有着不一样的编排文件书写规范。笔者认为，Rancher Pipeline集成进Rancher 2.0应该也不会太遥远。</p>
+</blockquote>
+<hr>
+<h2 id="1-环境信息"><a href="#1-环境信息" class="headerlink" title="1.环境信息"></a>1.环境信息</h2><table>
+<thead>
+<tr>
+<th style="text-align:left">虚拟机名称</th>
+<th style="text-align:center">角色</th>
+<th style="text-align:center">hostname</th>
+<th style="text-align:center">IP地址</th>
+<th style="text-align:center">备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">rancher2.0-01</td>
+<td style="text-align:center">Rancher Server</td>
+<td style="text-align:center">rancher2.0-01</td>
+<td style="text-align:center">10.0.0.200</td>
+<td style="text-align:center">额外安装Docker Registry v2</td>
+</tr>
+<tr>
+<td style="text-align:left">rchost-01</td>
+<td style="text-align:center">Host01</td>
+<td style="text-align:center">rchost-01</td>
+<td style="text-align:center">10.0.0.201</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:left">rchost-02</td>
+<td style="text-align:center">Host02</td>
+<td style="text-align:center">rchost-02</td>
+<td style="text-align:center">10.0.0.202</td>
+<td style="text-align:center"></td>
+</tr>
+</tbody>
+</table>
+<p> 1.准备工作：所有虚拟机Guest OS版本为CentOS 7.2，Docker 1.12.6，关闭防火墙和SELinux；<br> 2.本文笔者使用的Demo是Fork自官方的github项目，所以做pipeline过程演示的SCM就是github，私网的可将其源码down下来通过gitlab代替。</p>
+<h2 id="2-容器集群搭建"><a href="#2-容器集群搭建" class="headerlink" title="2. 容器集群搭建"></a>2. 容器集群搭建</h2><h3 id="2-1-Rancher-Server的安装"><a href="#2-1-Rancher-Server的安装" class="headerlink" title="2.1 Rancher Server的安装"></a>2.1 Rancher Server的安装</h3><p>Rancher Server 1.6的安装指导详见：<a href="http://rancher.com/docs/rancher/latest/en/quick-start-guide/" target="_blank" rel="noopener">http://rancher.com/docs/rancher/latest/en/quick-start-guide/</a><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo docker run -d --restart=unless-stopped -p 8080:8080 rancher/server:latest</span><br></pre></td></tr></table></figure></p>
+<p>因为Rancher Server服务是以容器方式来running的，所以它的安装非常简单，一条命令就可以拉起来。后面引用的镜像rancher/server，目前来看有三个tag，latest和stable是对应1.6的开发版和稳定版（开发版镜像超过1GB，建议使用阿里的镜像加速；生产部署，官方推荐使用稳定版），preview则是对应Rancher 2.0。所以，由此可见Rancher 2.0的安装还是沿袭了Rancher自有的极简风格，这点不得不点赞。只是稍加注意的是，2.0的Rancher Server，建议部署在内存大于4GB的物理机或者虚拟机上，而1.0是1GB。</p>
+<p>当Rancher Server容器起来之后，我们便可以通过<a href="http://10.0.0.200:8080" target="_blank" rel="noopener">http://10.0.0.200:8080</a> 来访问它的UI，如下：<br><img src="https://5cloud.github.io/img/20171230/rancher-ui.jpg" alt="catalog2.0"></p>
+<p>我们可以发现，Rancher Server的UI简洁、美观，并支持在中文、英语、日语、法语等十种语言之间自由切换设置。关于Rancher的日常管理、维护，除了UI，还有另外两种途径可供选择：Rancher CLI(beta)、RESTful API。</p>
+<h3 id="2-2-添加主机"><a href="#2-2-添加主机" class="headerlink" title="2.2 添加主机"></a>2.2 添加主机</h3><p>将10.0.0.201、10.0.0.202两台虚机添加至Rancher Server，由Rancher Server统一纳管，形成一个小规模的容器集群。此步骤，按照<strong>基础架构/主机/添加主机</strong>的UI提示进行相关操作即可。</p>
+<p><img src="https://5cloud.github.io/img/20171230/add-host.jpg" alt="catalog2.0"></p>
+<p>两台虚拟机添加至Rancher Server之后，除了rancher agent，还会生成很多其他附属的、用于构建Rancher容器集群主机侧的<strong>关键基础设施容器</strong>，例如healthcheck、ipsec、network-services、scheduler，从其命名上我们就可以很容易地理解到它们的用途。rancher agent镜像只有200+MB，所以主机列表应该很快就可以看到被添加进来的主机。但是，基础设施类的容器数目比较多，总体镜像体积不小，它们变成正常的、Running状态，可能需要花上一些时间（考验网速的时候到了:)）。<strong>在基础设施类的容器没完全拉起来之前，严格意义上来说，集群是不完整的、不可用的</strong>。</p>
+<p><img src="https://5cloud.github.io/img/20171230/host-ok.jpg" alt="catalog2.0"></p>
+<h3 id="2-3-安装Docker-Registry-v2"><a href="#2-3-安装Docker-Registry-v2" class="headerlink" title="2.3 安装Docker Registry v2"></a>2.3 安装Docker Registry v2</h3><p>在10.0.0.200上额外安装Docker Registry v2（镜像库，可以使用类似 VMware Harbor、Youruncloud AppHouse、Nexus代替），然后在10.0.0.201和10.0.0.202上的docker daemon配置<strong>insecure-registries</strong>选项。根据笔者的环境，修改/etc/docker/daemon.json文件添加insecure-registries选项、再重启docker。当然，不要忘记在10.0.0.201和10.0.0.202上做一下push镜像的测试，确认其有效性。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">"insecure-registries"</span>:[<span class="string">"10.0.0.200:5000"</span>],</span><br><span class="line">  <span class="string">"registry-mirrors"</span>:[<span class="string">"https://7dwtipt9.mirror.aliyuncs.com"</span>]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>在Rancher UI上也需要添加我们刚新建的镜像库</strong>。Rancher可以把 DockerHub、Quay.io 或者任何私有镜像库的访问凭据添加进来，来访问私有镜像。在镜像库被添加进来之后，Rancher将能在启动服务或者容器的时候使用这些私有镜像库。镜像名称的语法是与我们在docker run 命令中是相同的。<br><img src="https://5cloud.github.io/img/20171230/add-registry1.jpg" alt="catalog2.0"></p>
+<h2 id="3-部署Rancher-Pipeline"><a href="#3-部署Rancher-Pipeline" class="headerlink" title="3. 部署Rancher Pipeline"></a>3. 部署Rancher Pipeline</h2><h3 id="3-1-在应用商店中搜索”pipeline”"><a href="#3-1-在应用商店中搜索”pipeline”" class="headerlink" title="3.1 在应用商店中搜索”pipeline”"></a>3.1 在<strong>应用商店</strong>中搜索”pipeline”</h3><p><img src="https://5cloud.github.io/img/20171230/find-pipeline.jpg" alt="catalog2.0"></p>
+<h3 id="3-2-部署Rancher-Pipeline"><a href="#3-2-部署Rancher-Pipeline" class="headerlink" title="3.2 部署Rancher Pipeline"></a>3.2 部署Rancher Pipeline</h3><p>找到Rancher pipeline之后，点击<strong>查看详情</strong>。在新弹出的展示页面中，可保持默认配置，直接点击“<strong>启动</strong>”按钮，Rancher Server则将自动化新增部署Pipeline组件。在点击“启动”按钮之前，点击“<strong>预览</strong>”，通过docker-compose.yml内容不难看出，<strong>Rancher pipeline服务是主要由四部分组成，jenkins-master、jenkins-slave、pipeline-server、pipeline-ui</strong>。</p>
+<p><img src="https://5cloud.github.io/img/20171230/pipeline-docker-compose.jpg" alt="catalog2.0"></p>
+<p>需要注意的是，Rancher pipeline相关的服务容器也是属于<strong>关键基础设施容器</strong>。</p>
+<p><img src="https://5cloud.github.io/img/20171230/pipeline-ok.jpg" alt="catalog2.0"></p>
+<h2 id="4-配置Rancher-Pipeline"><a href="#4-配置Rancher-Pipeline" class="headerlink" title="4. 配置Rancher Pipeline"></a>4. 配置Rancher Pipeline</h2><h3 id="4-1-添加流水线，包括添加Repo、添加Github的授权"><a href="#4-1-添加流水线，包括添加Repo、添加Github的授权" class="headerlink" title="4.1 添加流水线，包括添加Repo、添加Github的授权"></a>4.1 <strong>添加流水线</strong>，包括添加Repo、添加Github的授权</h3><p>当第一次添加流水线时，Rancher会提醒您添加代码库、以及代码仓库的授权。</p>
+<p><img src="https://5cloud.github.io/img/20171230/add-Repo.jpg" alt="catalog2.0"></p>
+<p>根据页面提示，一步步完成Repo、Github的授权的添加。</p>
+<p><img src="https://5cloud.github.io/img/20171230/authorize.jpg" alt="catalog2.0"></p>
+<p>选择提前Fork自官方的github项目<strong>pipeline-example</strong>，保持默认设置中的master分支、勾选Webhook，点击<strong>Add</strong>按钮。</p>
+<p><img src="https://5cloud.github.io/img/20171230/github-master.jpg" alt="catalog2.0"></p>
+<blockquote>
+<p>Rancher Pipeline支持通过<strong>导入pipeline.yml文件</strong>快速创建流水线，而编写pipeline.yml有一定的语法规范，笔者没有做过多了解，应该和jenkins pipeline文件采用的groovy语法差不多。</p>
+</blockquote>
+<h3 id="4-2-配置流水线"><a href="#4-2-配置流水线" class="headerlink" title="4.2 配置流水线"></a>4.2 配置流水线</h3><p>随后，我们可以按照<a href="https://github.com/rancher/pipeline" target="_blank" rel="noopener">https://github.com/rancher/pipeline</a>  项目README.md页面中的<strong>Quick Start Guide</strong>，对流水线的<strong>Stage</strong>和<strong>步骤</strong>进行配置。</p>
+<p><img src="https://5cloud.github.io/img/20171230/stage-and-step.jpg" alt="catalog2.0"></p>
+<p>Stage，中文为“阶段”，意指流水线中类似源码、测试、打包等这一个个连串的阶段过程，上一个Stage结果Success流水线才会推进到下一个Stage，否则终止结束；而每一个Stage，又可以定义很多并行或者串行的步骤（<strong>例如，测试这个Stage，可以设计由单元测试、静态扫描、功能测试、性能测试、UI测试等步骤来任意组合</strong>），每一个步骤可以指定Shell脚本、Entrypoint，并引用自定义变量；如果某Stage有一个步骤运行结果为Fail，那么该Stage就为Fail，整个流水线也会终止结束。</p>
+<p><img src="https://5cloud.github.io/img/20171230/add-step.jpg" alt="catalog2.0"></p>
+<h2 id="5-Demo演示"><a href="#5-Demo演示" class="headerlink" title="5. Demo演示"></a>5. Demo演示</h2><p>流水线配置完毕之后，我们运行一下看一下。</p>
+<p><img src="https://5cloud.github.io/img/20171230/running-success.jpg" alt="catalog2.0"></p>
+<p>官方示例的操作指导，只包含了三个Stage：Source Code、Test_stage、package_stage，我们在此基础上再稍作增强一下，<strong>增加一个Stage</strong>：running_stage。我们一起检验一下Rancher Pipeline在流水线<strong>部署</strong>环节，它又能做哪些呢？</p>
+<h3 id="5-1-新建hello-world应用"><a href="#5-1-新建hello-world应用" class="headerlink" title="5.1 新建hello-world应用"></a>5.1 新建hello-world应用</h3><p>点击<strong>应用/添加应用</strong>，按照如下docker-compose.yml、rancher-compose.yml内容添加应用，并命名为hello-world。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#docker-compose.yml</span></span><br><span class="line">hello-world:</span><br><span class="line">  ports:</span><br><span class="line">  - 3000:3000</span><br><span class="line">  restart: always</span><br><span class="line">  labels:</span><br><span class="line">    io.rancher.container.pull_image: always</span><br><span class="line">  tty: <span class="literal">true</span></span><br><span class="line">  image: 10.0.0.200:5000/pipeline-helloword</span><br><span class="line">  stdin_open: <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#rancher-compose.yml</span></span><br><span class="line">hello-world:</span><br><span class="line">  scale: 1</span><br></pre></td></tr></table></figure>
+<p><img src="https://5cloud.github.io/img/20171230/add-application.jpg" alt="catalog2.0"></p>
+<p><img src="https://5cloud.github.io/img/20171230/access-hello-world.jpg" alt="catalog2.0"></p>
+<p>通过<strong>升级</strong>的方式，给hello-world这个Service打上一个标签（5.2步骤所需），如下：</p>
+<p><img src="https://5cloud.github.io/img/20171230/add-lable.jpg" alt="catalog2.0"></p>
+<h3 id="5-2-在原先流水线基础上，增加一个Stage：running-stage"><a href="#5-2-在原先流水线基础上，增加一个Stage：running-stage" class="headerlink" title="5.2 在原先流水线基础上，增加一个Stage：running_stage"></a>5.2 在原先流水线基础上，<strong>增加一个Stage</strong>：running_stage</h3><p>在原先流水线基础上，增加一个Stage：running_stage。在running_stage下添加步骤，步骤类型选择<strong>upgradeService</strong>（即升级Service），选择合适的镜像，可通过引用标签，来设置生效的Service对象，并指定升级策略。</p>
+<p><img src="https://5cloud.github.io/img/20171230/add-stage.jpg" alt="catalog2.0"></p>
+<p><img src="https://5cloud.github.io/img/20171230/upgradeService.jpg" alt="catalog2.0"></p>
+<blockquote>
+<p>与upgradeService类似的步骤类型还有，<strong>Upgrade Stack</strong>和<strong>Upgrade Catalog</strong>。由于时间原因，笔者没法一一在这里向大家展示。但是仅从此项功能设计来看，Rancher对如何<strong>提升应用部署效率</strong>的解决之道的把握，是非常值得肯定的。</p>
+</blockquote>
+<h3 id="5-3-修改示例源代码"><a href="#5-3-修改示例源代码" class="headerlink" title="5.3 修改示例源代码"></a>5.3 修改示例源代码</h3><p><strong>保存</strong>刚刚修改的流水线之后，接下来修改示例的源代码，这样来予以验证我们的应用改动是否可生效。此步骤，有两个文件（<strong>server.js</strong>，<strong>test/test-pages.js</strong>）需要修改。如果test/test-pages.js内容没改或者与server.js改动不一致，流水线的test_stage将Fail，整个流水线也会终止结束：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#server.js</span></span><br><span class="line">const http = require(<span class="string">'http'</span>);</span><br><span class="line"></span><br><span class="line">const hostname = <span class="string">'0.0.0.0'</span>;</span><br><span class="line">const port = 3000;</span><br><span class="line"></span><br><span class="line">const server = http.createServer((req, res) =&gt; &#123;</span><br><span class="line">  res.statusCode = 200;</span><br><span class="line">  res.setHeader(<span class="string">'Content-Type'</span>, <span class="string">'text/plain'</span>);</span><br><span class="line">  res.end(<span class="string">'Happy New Year , I am AndrewLong'</span>); <span class="comment">#改掉原来的Hello World</span></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">server.listen(port, hostname, () =&gt; &#123;</span><br><span class="line">  console.log(`Server running at http://<span class="variable">$&#123;hostname&#125;</span>:<span class="variable">$&#123;port&#125;</span>/`);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#test/test-pages.js</span></span><br><span class="line">var expect  = require(<span class="string">'chai'</span>).expect;</span><br><span class="line">var request = require(<span class="string">'request'</span>);</span><br><span class="line">var server = process.env[<span class="string">'SERVER'</span>]||localhost;</span><br><span class="line">it(<span class="string">'Main page content'</span>, <span class="keyword">function</span>(<span class="keyword">done</span>) &#123;</span><br><span class="line">    request(<span class="string">'http://'</span> + server + <span class="string">':3000'</span> , <span class="keyword">function</span>(error, response, body) &#123;</span><br><span class="line">      expect(body).to.equal(<span class="string">'Happy New Year , I am AndrewLong'</span>); <span class="comment">#改掉原来的Hello World</span></span><br><span class="line">      <span class="keyword">done</span>();</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h3 id="5-4-运行改进的流水线"><a href="#5-4-运行改进的流水线" class="headerlink" title="5.4 运行改进的流水线"></a>5.4 运行改进的流水线</h3><p>立刻<strong>运行</strong>流水线，我们再看一下具体的效果。</p>
+<p><img src="https://5cloud.github.io/img/20171230/new-pipeline-ok.jpg" alt="catalog2.0"></p>
+<p>流水线最后一个Stage，在运行步骤upgradeService时，我们可以发现，Rancher确实可以按照我们既定的策略<strong>自动</strong>执行<strong>Rolling Update</strong>。</p>
+<p><img src="https://5cloud.github.io/img/20171230/upgrading.jpg" alt="catalog2.0"></p>
+<p>升级完毕之后，访问新的应用页面。</p>
+<p><img src="https://5cloud.github.io/img/20171230/ending-ok.jpg" alt="catalog2.0"></p>
+<h2 id="6-结语"><a href="#6-结语" class="headerlink" title="6. 结语"></a>6. <strong>结语</strong></h2><p>Rancher Labs官方微信公众号刚刚发布这篇软文<a href="http://mp.weixin.qq.com/s/kOfTSNwg0MYdtyCrCCMyJg" target="_blank" rel="noopener">《Rancher Pipeline发布：开源、极简、强大的CI/CD》</a>，您可以找到关于Rancher Pipeline功能介绍相关归纳性更强的话述。虽然主观性较强，但出于开源，这完全值得被原谅。由于时间、篇幅有限，很多关于Rancher Pipeline的功能笔者只能浅尝辄止，但是就本文内容所涉及的整个过程，体验是非常不错的的。毕竟，Rancher还是Rancher。</p>
+<p>Happy New Year!:)</p>
+
+
+                <hr>
+
+                
+
+                <ul class="pager">
+                    
+                    
+                </ul>
+
+                
+
+                
+                <!-- disqus 评论框 start -->
+                <div class="comment">
+                    <div id="disqus_thread" class="disqus-thread"></div>
+                </div>
+                <!-- disqus 评论框 end -->
+                
+
+            </div>
+    <!-- Side Catalog Container -->
+        
+            <div class="
+                col-lg-2 col-lg-offset-0
+                visible-lg-block
+                sidebar-container
+                catalog-container">
+                <div class="side-catalog">
+                    <hr class="hidden-sm hidden-xs">
+                    <h5>
+                        <a class="catalog-toggle" href="#">CATALOG</a>
+                    </h5>
+                    <ul class="catalog-body"></ul>
+                </div>
+            </div>
+        
+
+    <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/hexo-theme-huxblog/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/hexo-theme-huxblog/tags/#Rancher" title="Rancher">Rancher</a>
+                        
+                          <a class="tag" href="/hexo-theme-huxblog/tags/#容器" title="容器">容器</a>
+                        
+                          <a class="tag" href="/hexo-theme-huxblog/tags/#Pipeline" title="Pipeline">Pipeline</a>
+                        
+                          <a class="tag" href="/hexo-theme-huxblog/tags/#CICD" title="CICD">CICD</a>
+                        
+                          <a class="tag" href="/hexo-theme-huxblog/tags/#DevOps" title="DevOps">DevOps</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                </ul>
+                
+            </div>
+
+        </div>
+    </div>
+</article>
+
+
+
+
+<!-- disqus 公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = "hexo-theme-huxblog";
+    var disqus_identifier = "http://kaijun.rocks/hexo-theme-huxblog/2018/01/01/rancher-pipeline/";
+    var disqus_url = "http://kaijun.rocks/hexo-theme-huxblog/2018/01/01/rancher-pipeline/";
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<!-- disqus 公共JS代码 end -->
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'always',
+          placement: 'right',
+          icon: '#'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                
+
+                
+
+                
+
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Andrew`s Blog 2018 
+                    <br>
+                    Theme by <a href="http://huangxuan.me">Hux</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                    Ported by <a href="http://blog.kaijun.rocks">Kaijun</a> | 
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="91px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=kaijun&repo=hexo-theme-huxblog&type=star&count=true" >
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/hexo-theme-huxblog/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/hexo-theme-huxblog/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/hexo-theme-huxblog/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://kaijun.rocks/hexo-theme-huxblog/hexo-theme-huxblog/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+
+
+<!-- Baidu Tongji -->
+
+<script>
+    // dynamic User by Hux
+    var _baId = '1e763a30d90c6f5c2bc559f74e974d67';
+
+    // Originial
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?" + _baId;
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+<!-- Side Catalog -->
+
+<script type="text/javascript">
+    function generateCatalog (selector) {
+        var P = $('div.post-container'),a,n,t,l,i,c;
+        a = P.find('h1,h2,h3,h4,h5,h6');
+        a.each(function () {
+            n = $(this).prop('tagName').toLowerCase();
+            i = "#"+$(this).prop('id');
+            t = $(this).text();
+            c = $('<a href="'+i+'" rel="nofollow">'+t+'</a>');
+            l = $('<li class="'+n+'_nav"></li>').append(c);
+            $(selector).append(l);
+        });
+        return true;    
+    }
+
+    generateCatalog(".catalog-body");
+
+    // toggle side catalog
+    $(".catalog-toggle").click((function(e){
+        e.preventDefault();
+        $('.side-catalog').toggleClass("fold")
+    }))
+
+    /*
+     * Doc: https://github.com/davist11/jQuery-One-Page-Nav
+     * Fork by Hux to support padding
+     */
+    async("/hexo-theme-huxblog/js/jquery.nav.js", function () {
+        $('.catalog-body').onePageNav({
+            currentClass: "active",
+            changeHash: !1,
+            easing: "swing",
+            filter: "",
+            scrollSpeed: 700,
+            scrollOffset: 0,
+            scrollThreshold: .2,
+            begin: null,
+            end: null,
+            scrollChange: null,
+            padding: 80
+        });
+    });
+</script>
+
+
+
+
+
+<!-- Image to hack wechat -->
+<img src="http://kaijun.rocks/hexo-theme-huxblog/hexo-theme-huxblog/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>
